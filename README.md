@@ -1,5 +1,5 @@
 [ ![Download](https://api.bintray.com/packages/bincrafters/public-conan/ogg%3Abincrafters/images/download.svg) ](https://bintray.com/bincrafters/public-conan/ogg%3Abincrafters/_latestVersion)
-[![Build Status](https://travis-ci.org/bincrafters/conan-ogg.svg?branch=stable%2Fmaster)](https://travis-ci.org/bincrafters/conan-ogg)
+[![Build Status](https://travis-ci.org/bincrafters/conan-ogg.svg?branch=stable%2F1.3.3)](https://travis-ci.org/bincrafters/conan-ogg)
 [![Build status](https://ci.appveyor.com/api/projects/status/sxs9n6vb8nqa92l5?svg=true)](https://ci.appveyor.com/project/BinCrafters/conan-ogg)
 
 [Conan.io](https://conan.io) package for [ogg](https://github.com/xiph/ogg) project
@@ -10,14 +10,14 @@ The packages generated with this **conanfile** can be found in [Bintray](https:/
 
 ### Basic setup
 
-    $ conan install ogg/master@bincrafters/stable
+    $ conan install ogg/1.3.3@bincrafters/stable
 
 ### Project setup
 
 If you handle multiple dependencies in your project is better to add a *conanfile.txt*
 
     [requires]
-    ogg/master@bincrafters/stable
+    ogg/1.3.3@bincrafters/stable
 
     [generators]
     cmake
@@ -44,7 +44,7 @@ The following command both runs all the steps of the conan file, and publishes t
 
 ## Upload
 
-    $ conan upload ogg/master@bincrafters/stable --all -r bincrafters
+    $ conan upload ogg/1.3.3@bincrafters/stable --all -r bincrafters
 
 ## License
 [BSD 3-Clause](https://github.com/xiph/ogg/blob/master/COPYING)
