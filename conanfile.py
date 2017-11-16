@@ -38,7 +38,6 @@ class OggConan(ConanFile):
             zip_name ="v%s.zip" % self.version
 
         download("https://github.com/xiph/ogg/archive/%s" % zip_name, zip_name)
-
         unzip(zip_name)
         os.unlink(zip_name)
         os.rename("%s-%s" % (self.name, self.version), self.sources_folder)
