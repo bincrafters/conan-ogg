@@ -16,8 +16,8 @@ class OggConan(ConanFile):
     sources_folder = "sources"
     generators = "cmake"
     settings = "os", "arch", "build_type", "compiler"
-    options = {"shared": [True, False]}
-    default_options = "shared=False"
+    options = {"shared": [True, False], "fPIC": [True, False]}
+    default_options = "shared=False", "fPIC=True"
     url="https://github.com/bincrafters/conan-ogg"
     description="The OGG library"
     requires = ""
@@ -27,6 +27,9 @@ class OggConan(ConanFile):
 
     def configure(self):
         del self.settings.compiler.libcxx
+
+        if self.settings.os == "Windows":
+            self.options.remove("fPIC")
 
     def source(self):
         if self.version == "master":
@@ -42,6 +45,8 @@ class OggConan(ConanFile):
 
     def build(self):
         cmake = CMake(self)
+        if self.settings.os != "Windows":
+            cmake.definitions["CMAKE_POSITION_INDEPENDENT_CODE"] = self.options.fPIC
         cmake.configure()
         cmake.build()
 
