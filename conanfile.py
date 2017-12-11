@@ -53,6 +53,7 @@ class OggConan(ConanFile):
     def package(self):
         self.copy("FindOGG.cmake", ".", ".")
         self.copy(pattern="*.h", dst="include/ogg", keep_path=False)
+        self.copy(pattern="*.pc", dst=os.path.join('lib', 'pkgconfig'), keep_path=False)
         self.copy("%s/copying*" % self.sources_folder, dst="licenses",  ignore_case=True, keep_path=False)
 
         if self.settings.compiler == "Visual Studio":
