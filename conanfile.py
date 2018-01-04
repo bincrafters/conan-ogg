@@ -1,29 +1,23 @@
-from conans import ConanFile, CMake
-from conans.tools import download, unzip
-from conans.util.files import load
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from conans import ConanFile, CMake, tools
 import os, re
 
-def replace_in_file_regex(file_path, search, replace):
-    content = load(file_path)
-    content = re.sub(search, replace, content)
-    content = content.encode("utf-8")
-    with open(file_path, "wb") as handle:
-        handle.write(content)
 
 class OggConan(ConanFile):
     name = "ogg"
     version = "1.3.3"
-    sources_folder = "sources"
+    description="The OGG library"
+    url="https://github.com/bincrafters/conan-ogg"
+    license="BSD"
+    exports = ["LICENSE.md", "FindOGG.cmake"]
+    exports_sources = ["CMakeLists.txt"]
     generators = "cmake"
+    source_subfolder = "sources"
     settings = "os", "arch", "build_type", "compiler"
     options = {"shared": [True, False], "fPIC": [True, False]}
     default_options = "shared=False", "fPIC=True"
-    url="https://github.com/bincrafters/conan-ogg"
-    description="The OGG library"
-    requires = ""
-    license="BSD"
-    exports = "FindOGG.cmake"
-    exports_sources = ["CMakeLists.txt"]
 
     def configure(self):
         del self.settings.compiler.libcxx
@@ -32,16 +26,10 @@ class OggConan(ConanFile):
             self.options.remove("fPIC")
 
     def source(self):
-        if self.version == "master":
-            zip_name = "%s.zip" % self.version
-        else:
-            zip_name ="v%s.zip" % self.version
-
-        download("https://github.com/xiph/ogg/archive/%s" % zip_name, zip_name)
-
-        unzip(zip_name)
-        os.unlink(zip_name)
-        os.rename("%s-%s" % (self.name, self.version), self.sources_folder)
+        source_url = "https://github.com/xiph/ogg"
+        tools.get("{0}/archive/v{1}.tar.gz".format(source_url, self.version))
+        extracted_dir = self.name + "-" + self.version
+        os.rename(extracted_dir, self.source_subfolder)
 
     def build(self):
         cmake = CMake(self)
@@ -51,10 +39,11 @@ class OggConan(ConanFile):
         cmake.build()
 
     def package(self):
-        self.copy("FindOGG.cmake", ".", ".")
+        
+        self.copy("FindOGG.cmake")
+        self.copy("COPYING", keep_path=False)
         self.copy(pattern="*.h", dst="include/ogg", keep_path=False)
         self.copy(pattern="*.pc", dst=os.path.join('lib', 'pkgconfig'), keep_path=False)
-        self.copy("%s/copying*" % self.sources_folder, dst="licenses",  ignore_case=True, keep_path=False)
 
         if self.settings.compiler == "Visual Studio":
             if self.options.shared:
@@ -75,3 +64,10 @@ class OggConan(ConanFile):
      
     def package_info(self):
         self.cpp_info.libs = ['ogg']
+
+    def replace_in_file_regex(file_path, search, replace):
+        content = tools.load(file_path)
+        content = re.sub(search, replace, content)
+        content = content.encode("utf-8")
+        tools.save(file_path, content)
+
