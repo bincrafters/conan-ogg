@@ -10,7 +10,8 @@ class OggConan(ConanFile):
     version = "1.3.3"
     description="The OGG library"
     url="https://github.com/bincrafters/conan-ogg"
-    license="BSD"
+    homepage = "https://github.com/xiph/ogg"
+    license = "BSD"
     exports = ["LICENSE.md", "FindOGG.cmake"]
     exports_sources = ["CMakeLists.txt"]
     generators = "cmake"
@@ -19,15 +20,15 @@ class OggConan(ConanFile):
     options = {"shared": [True, False], "fPIC": [True, False]}
     default_options = "shared=False", "fPIC=True"
 
-    def configure(self):
-        del self.settings.compiler.libcxx
-
+    def config_options(self):
         if self.settings.os == "Windows":
             self.options.remove("fPIC")
 
+    def configure(self):
+        del self.settings.compiler.libcxx
+
     def source(self):
-        source_url = "https://github.com/xiph/ogg"
-        tools.get("{0}/archive/v{1}.tar.gz".format(source_url, self.version))
+        tools.get("{0}/archive/v{1}.tar.gz".format(self.homepage, self.version))
         extracted_dir = self.name + "-" + self.version
         os.rename(extracted_dir, self.source_subfolder)
 
