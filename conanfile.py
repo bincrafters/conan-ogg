@@ -38,30 +38,13 @@ class OggConan(ConanFile):
             cmake.definitions["CMAKE_POSITION_INDEPENDENT_CODE"] = self.options.fPIC
         cmake.configure()
         cmake.build()
+        cmake.install()
 
     def package(self):
         self.copy("FindOGG.cmake")
-        self.copy("COPYING", src=self.source_subfolder, keep_path=False)
-        self.copy("*.h", dst=os.path.join("include", "ogg"), keep_path=False)
-        self.copy("*.pc", dst=os.path.join('lib', 'pkgconfig'), keep_path=False)
+        self.copy("COPYING", src=self.source_subfolder, dst="licenses", keep_path=False)
+        self.copy("LICENSE.md", dst="licenses", keep_path=False)
 
-        if self.settings.compiler == "Visual Studio":
-            if self.options.shared:
-                self.copy("*.dll", dst="bin", keep_path=False)
-            self.copy("*.pdb", dst="bin", keep_path=False)
-            self.copy("*.lib", dst="lib", keep_path=False)
-        else:
-            if self.options.shared:
-                if self.settings.os == "Macos":
-                    self.copy("*.dylib", dst="lib", keep_path=False)
-                elif self.settings.os == "Windows":
-                    self.copy("*.dll", dst="bin", keep_path=False)
-                    self.copy("*.dll.a", dst="lib", keep_path=False)
-                else:
-                    self.copy("*.so*", dst="lib", keep_path=False)
-            else:
-                self.copy("*g.a", dst="lib", keep_path=False)
-     
     def package_info(self):
         self.cpp_info.libs = ['ogg']
 
