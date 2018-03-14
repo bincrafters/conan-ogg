@@ -43,7 +43,6 @@ class OggConan(ConanFile):
     def package(self):
         self.copy("FindOGG.cmake")
         self.copy("COPYING", src=self.source_subfolder, dst="licenses", keep_path=False)
-        self.copy("LICENSE.md", dst="licenses", keep_path=False)
 
     def package_info(self):
         self.cpp_info.libs = ['ogg']
