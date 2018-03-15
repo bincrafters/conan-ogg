@@ -1,8 +1,8 @@
 ## Package Status
 
-| Bintray | Appveyor | Travis | 
-|---------|-----------|--------|
-|[![Download](https://api.bintray.com/packages/bincrafters/public-conan/ogg%3Abincrafters/images/download.svg)](https://bintray.com/bincrafters/public-conan/ogg%3Abincrafters/_latestVersion)|[![Build status](https://ci.appveyor.com/api/projects/status/sxs9n6vb8nqa92l5?svg=true)](https://ci.appveyor.com/project/BinCrafters/conan-ogg)|[![Build Status](https://travis-ci.org/bincrafters/conan-ogg.svg?branch=stable%2F1.3.3)](https://travis-ci.org/bincrafters/conan-ogg)|
+| Bintray | Windows | Linux & macOS | 
+|:--------:|:---------:|:-----------------:|
+|[![Download](https://api.bintray.com/packages/bincrafters/public-conan/ogg%3Abincrafters/images/download.svg)](https://bintray.com/bincrafters/public-conan/ogg%3Abincrafters/_latestVersion)|[![Build status](https://ci.appveyor.com/api/projects/status/github/bincrafters/conan-ogg?svg=true)](https://ci.appveyor.com/project/BinCrafters/conan-ogg)|[![Build Status](https://travis-ci.org/bincrafters/conan-ogg.svg)](https://travis-ci.org/bincrafters/conan-ogg)|
 
 ## Conan.io Information
 
