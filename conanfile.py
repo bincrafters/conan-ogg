@@ -8,8 +8,8 @@ import os
 class OggConan(ConanFile):
     name = "ogg"
     version = "1.3.3"
-    description="The OGG library"
-    url="https://github.com/bincrafters/conan-ogg"
+    description = "The OGG library"
+    url = "https://github.com/bincrafters/conan-ogg"
     homepage = "https://github.com/xiph/ogg"
     license = "BSD"
     exports = ["LICENSE.md", "FindOGG.cmake"]
