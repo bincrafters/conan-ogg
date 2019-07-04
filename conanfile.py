@@ -9,9 +9,11 @@ class OggConan(ConanFile):
     name = "ogg"
     version = "1.3.3"
     description = "The OGG library"
+    topics = "conan", "ogg", "codec", "audio", "lossless",
     url = "https://github.com/bincrafters/conan-ogg"
+    author = "bincrafters <bincrafters@gmail.com>"
     homepage = "https://github.com/xiph/ogg"
-    license = "BSD"
+    license = "BSD-2-Clause"
     exports = ["LICENSE.md", "FindOGG.cmake"]
     exports_sources = ["CMakeLists.txt"]
     generators = "cmake"
@@ -28,7 +30,8 @@ class OggConan(ConanFile):
         del self.settings.compiler.libcxx
 
     def source(self):
-        tools.get("{0}/archive/v{1}.tar.gz".format(self.homepage, self.version))
+        url = "{0}/archive/v{1}.tar.gz".format(self.homepage, self.version)
+        tools.get(url, sha256="e90a47bb9f9fd490644f82a097c920738de6bfcbd2179ec354e11a2cd3b49806")
         extracted_dir = self.name + "-" + self.version
         os.rename(extracted_dir, self._source_subfolder)
 
