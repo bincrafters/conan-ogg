@@ -8,16 +8,17 @@ class OggConan(ConanFile):
     description = "The OGG library"
     topics = ("conan", "ogg", "codec", "audio", "lossless")
     url = "https://github.com/bincrafters/conan-ogg"
-    author = "Bincrafters <bincrafters@gmail.com>"
     homepage = "https://github.com/xiph/ogg"
     license = "BSD-2-Clause"
-    exports = ["LICENSE.md", "FindOGG.cmake"]
     exports_sources = ["CMakeLists.txt"]
     generators = "cmake"
-    _source_subfolder = "sources"
+
     settings = "os", "arch", "build_type", "compiler"
     options = {"shared": [True, False], "fPIC": [True, False]}
     default_options = {'shared': False, 'fPIC': True}
+
+    _source_subfolder = "source_subfolder"
+    _build_subfolder = "build_subfolder"
 
     def config_options(self):
         if self.settings.os == "Windows":
@@ -33,18 +34,19 @@ class OggConan(ConanFile):
         extracted_dir = self.name + "-" + self.version
         os.rename(extracted_dir, self._source_subfolder)
 
-    def build(self):
+    def _configure_cmake(self):
         cmake = CMake(self)
-        if self.settings.os != "Windows":
-            cmake.definitions["CMAKE_POSITION_INDEPENDENT_CODE"] = self.options.fPIC
-        cmake.configure()
+        cmake.configure(build_folder=self._build_subfolder)
+        return cmake
+
+    def build(self):
+        cmake = self._configure_cmake()
         cmake.build()
-        cmake.install()
 
     def package(self):
-        self.copy("FindOGG.cmake")
+        cmake = self._configure_cmake()
+        cmake.install()
         self.copy("COPYING", src=self._source_subfolder, dst="licenses", keep_path=False)
 
     def package_info(self):
         self.cpp_info.libs = ['ogg']
-
