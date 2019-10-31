@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 from conans import ConanFile, CMake, tools
 import os
 
@@ -9,9 +6,9 @@ class OggConan(ConanFile):
     name = "ogg"
     version = "1.3.3"
     description = "The OGG library"
-    topics = "conan", "ogg", "codec", "audio", "lossless",
+    topics = ("conan", "ogg", "codec", "audio", "lossless")
     url = "https://github.com/bincrafters/conan-ogg"
-    author = "bincrafters <bincrafters@gmail.com>"
+    author = "Bincrafters <bincrafters@gmail.com>"
     homepage = "https://github.com/xiph/ogg"
     license = "BSD-2-Clause"
     exports = ["LICENSE.md", "FindOGG.cmake"]
@@ -28,6 +25,7 @@ class OggConan(ConanFile):
 
     def configure(self):
         del self.settings.compiler.libcxx
+        del self.settings.compiler.cppstd
 
     def source(self):
         url = "{0}/archive/v{1}.tar.gz".format(self.homepage, self.version)
